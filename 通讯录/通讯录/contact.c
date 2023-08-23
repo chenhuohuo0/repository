@@ -3,12 +3,43 @@
 //contact.c - 通讯录功能实现
 #include "contact.h"
 
+void add_capacity(contact* p)
+{
+	if (p->size == p->capacity)
+	{
+		peoinfo* ptr = (peoinfo*)realloc(p->data, (p->capacity + 2) * sizeof(peoinfo));
+		if (ptr != NULL)
+		{
+			p->data = ptr;
+		}
+	}
+}
+
 //通讯录初始化
 void init_contact(contact *p)
 {
 	p->data = (peoinfo*)malloc(3 * sizeof(peoinfo));
 	p->size = 0;
 	p->capacity = DEFAULT_SIZE;
+	FILE* pf = fopen("contact.txt", "rb");
+	if (pf == NULL)
+	{
+		printf("%s", strerror(errno));
+		return;
+	}
+	else
+	{
+		//从本地加载数据到内存
+		peoinfo t;
+		while (fread(&t, sizeof(peoinfo), 1, pf))
+		{
+			add_capacity(p);
+			p->data[p->size] = t;
+			p->size++;
+		}
+		fclose(pf);
+		pf = NULL;
+	}
 }
 
 //static修饰函数，使find_by_name()只能在contact.c中生效
@@ -23,18 +54,6 @@ static int find_by_name(const struct contact *p, const char arr[MAX_NAME])
 		}
 	}
 	return -1;
-}
-
-void add_capacity(contact* p)
-{
-	if (p->size == p->capacity)
-	{
-		peoinfo* ptr = (peoinfo*)realloc(p->data, (p->capacity + 2) * sizeof(peoinfo));
-		if (ptr != NULL)
-		{
-			p -> data = ptr;
-		}
-	}
 }
 
 //1.添加
@@ -182,8 +201,23 @@ void sort_contact(struct peoinfo *p, int n)
 	printf("已完成\n");
 }
 
+//7.保存
+void save_contact(contact *p)
+{
+	//从内存保存到本地
+	FILE* pf = fopen("contact.txt", "wb");
+	for (int i = 0; i < p->size; i++)
+	{
+		fwrite(&p->data[i], sizeof(peoinfo), 1, pf);
+	}
+	fclose(pf);
+	pf = NULL;
+	printf("保存成功\n");
+}
+
 void destory_contact(contact *p)
 {
 	free(p->data);
 	p = NULL;
 }
+

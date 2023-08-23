@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include<errno.h>
 
 #define MAX 1000
 #define MAX_NAME 20
@@ -18,7 +19,8 @@ enum f
 	search,
 	modify,
 	show,
-	sort
+	sort,
+	save
 };
 
 typedef struct peoinfo
@@ -57,6 +59,9 @@ void show_contact(const struct contact *p);
 
 //6.≈≈–Ú
 void sort_contact(struct peoinfo *p, int n);
+
+//7.±£¥Ê
+void save_contact(contact *p);
 
 void destory_contact(contact *p);
 

@@ -12,6 +12,7 @@ void menu()
 	printf("**** 4.modify ****\n");
 	printf("***** 5.show *****\n");
 	printf("***** 6.sort *****\n");
+	printf("***** 7.save *****\n");
 	printf("***** 0.exit *****\n");
 	printf("******************\n");
 }
@@ -48,7 +49,11 @@ int main()
 		case sort:
 			sort_contact(con.data, con.size);
 			break;
+		case save:
+			save_contact(&con);
+			break;
 		case EXIT:
+			save_contact(&con);
 			destory_contact(&con);
 			printf("�˳�ͨѶ¼\n");
 			break;
