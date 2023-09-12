@@ -1,0 +1,4 @@
+﻿  sort.c
+d:\cyl\visual_studio\workplace\排序\排序\sort.c(219): warning C4013: “malloc”未定义；假设外部返回 int
+d:\cyl\visual_studio\workplace\排序\排序\sort.c(241): warning C4013: “free”未定义；假设外部返回 int
+  排序.vcxproj -> D:\cyl\visual_studio\workplace\排序\Debug\排序.exe
